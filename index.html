@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ari Gelbard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f5f5f0;
+            color: #2c2c2c;
+            line-height: 1.7;
+        }
+
+        header {
+            background-color: #1a2e4a;
+            color: white;
+            padding: 48px 0 36px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.6rem;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        header p.subtitle {
+            font-size: 1rem;
+            color: #a8c0d6;
+            font-style: italic;
+        }
+
+        nav {
+            background-color: #22395c;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 12px 0;
+        }
+
+        nav a {
+            color: #cfe0ef;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 48px auto;
+            padding: 0 24px;
+        }
+
+        section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 36px 40px;
+            margin-bottom: 32px;
+        }
+
+        section h2 {
+            font-size: 1.4rem;
+            color: #1a2e4a;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #dde8f0;
+        }
+
+        .about-grid {
+            display: flex;
+            gap: 36px;
+            align-items: flex-start;
+        }
+
+        .about-grid img {
+            width: 210px;
+            height: 255px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .about-grid p {
+            font-size: 0.97rem;
+            color: #3a3a3a;
+        }
+
+        .interests-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .interests-list li {
+            padding: 6px 0;
+            font-size: 0.97rem;
+            color: #3a3a3a;
+        }
+
+        .interests-list li::before {
+            content: "→ ";
+            color: #22395c;
+            font-weight: bold;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .project-card {
+            border: 1px solid #dde8f0;
+            border-radius: 6px;
+            padding: 22px 24px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 4px 14px rgba(26,46,74,0.1);
+            border-color: #22395c;
+        }
+
+        .project-card h3 {
+            font-size: 1.05rem;
+            color: #1a2e4a;
+            margin-bottom: 8px;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 14px;
+        }
+
+        .project-card a {
+            display: inline-block;
+            background-color: #1a2e4a;
+            color: white;
+            padding: 7px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: background-color 0.2s;
+        }
+
+        .project-card a:hover {
+            background-color: #22395c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 640px) {
+            .about-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Ari Gelbard</h1>
+    <p class="subtitle">Data Science &amp; Analytics &bull; Georgetown University</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#interests">Interests</a>
+    <a href="#projects">Projects</a>
+</nav>
+
+<main>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-grid">
+            <img src="images/my_image.jpg" alt="Ari Gelbard">
+            <p>
+                Ari Gelbard is a current student in the Data Science and Analytics program at Georgetown University.
+                He received his bachelor's degree in Economics and Mathematics with a minor in Global Poverty from the
+                University of Maryland, College Park in 2022. He graduated with honors after writing an undergraduate
+                thesis on the effect of property rights on income inequality.
+                <br><br>
+                After graduating, he worked for the Federal Reserve Board of Governors as a research assistant (RA)
+                for three years in the Household and Business Spending section of the Division of Research and
+                Statistics (R&amp;S). While at The Board, his work consisted of managing the GDP and investment
+                databases, running econometric models and analyzing real-time economic data, contributing to and
+                writing memos pertaining to the staff's forecasts, and working with economists on a variety of
+                research and policy projects. He also received the 2024 Division Director's Award for his work on a
+                project that summarized the contributions of the R&amp;S division to the field of economic measurement.
+                <br><br>
+                In his free time, Ari enjoys playing board games, cooking, playing tennis, and bowling.
+            </p>
+        </div>
+    </section>
+
+    <!-- ACADEMIC INTERESTS -->
+    <section id="interests">
+        <h2>Academic Interests</h2>
+        <ul class="interests-list">
+            <li>Time Series Analysis</li>
+            <li>Economic Development</li>
+            <li>Education Economics</li>
+        </ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <h3>DSAN 5000 Project</h3>
+                <p>Data Science and Analytics project exploring methods and applications in the DSAN 5000 course at Georgetown University.</p>
+                <a href="https://arigelbard.georgetown.domains/dsan5000-project/" target="_blank" rel="noopener">View Project</a>
+            </div>
+
+            <div class="project-card">
+                <h3>DSAN 5200 Project</h3>
+                <p>Advanced data visualization and analytics project completed as part of the DSAN 5200 course at Georgetown University.</p>
+                <a href="https://arigelbard.georgetown.domains/dsan5200-project/" target="_blank" rel="noopener">View Project</a>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    &copy; 2026 Ari Gelbard
+</footer>
+
+</body>
+</html>
