@@ -33,14 +33,13 @@ else
     echo NOT PUSHING TO GTIHUB!
 fi
 
-
 ###################################################################################
 # Prompt user to push to website
 printf 'Do you want to push the website to the Georgetown University domains folder? (y/n)'
 read answer 
 
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
-    rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa" _site/* arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/index.html
+    rsync -avz -e "ssh -i ~/.ssh/id_rsa" index.html images/ arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
 else 
     echo NOT PUSHING TO WEBSITE!
 fi
