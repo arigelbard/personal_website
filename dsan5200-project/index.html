@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Unintended Harvest: The Hidden Costs of America's Ethanol Mandate</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ───────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design tokens ───────────────────────────────────────────────── */
+    :root {
+      --cream:        #f9f6ee;
+      --parchment:    #f0ead6;
+      --straw:        #e8d99a;
+      --gold:         #c9a84c;
+      --gold-dark:    #8b6914;
+      --sage:         #5a7a5c;
+      --sage-light:   #8aab8c;
+      --sage-dark:    #2d4a2f;
+      --earth:        #6b4c2a;
+      --earth-light:  #a07850;
+      --text:         #1e1a12;
+      --text-muted:   #5a5040;
+      --border:       #d4c898;
+      --section-gap:  120px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Typography ──────────────────────────────────────────────────── */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--sage-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--earth);
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      max-width: 68ch;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Navigation ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(249, 246, 238, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: var(--sage-dark);
+      font-style: italic;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links a {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 2px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--sage);
+      color: white;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────────────── */
+    #intro {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 80px 80px;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(249,246,238,0.0) 0%,
+          rgba(249,246,238,0.7) 60%,
+          rgba(249,246,238,1.0) 100%
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 60px,
+          rgba(201,168,76,0.04) 60px,
+          rgba(201,168,76,0.04) 61px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 60px,
+          rgba(201,168,76,0.04) 60px,
+          rgba(201,168,76,0.04) 61px
+        ),
+        var(--cream);
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--sage-dark);
+      margin-bottom: 12px;
+      max-width: 16ch;
+    }
+
+    .hero-title em {
+      color: var(--gold-dark);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--earth-light);
+      font-style: italic;
+      margin-bottom: 0;
+      max-width: 75ch;
+    }
+
+    .hero-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      margin-top: 32px;
+    }
+
+    .hero-text { }
+
+    .hero-body p {
+      font-size: 1.05rem;
+      max-width: none;
+    }
+
+    /* Policy tag strip */
+    .policy-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .policy-tag {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      background: var(--parchment);
+    }
+
+    /* ── Hero image ──────────────────────────────────────────────────── */
+    .hero-image {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 80px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image-caption {
+      padding: 8px 12px;
+      background: var(--parchment);
+      border: 1px solid var(--border);
+      border-top: none;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      margin: 20px 0 32px;
+      border-radius: 2px;
+    }
+
+    /* ── Generic section wrapper ─────────────────────────────────────── */
+    .section {
+      padding: var(--section-gap) 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section:nth-child(even) {
+      background: var(--parchment);
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-number {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage-light);
+      margin-bottom: 8px;
+    }
+
+    /* ── Side-by-side layout ─────────────────────────────────────────── */
+    .side-by-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .side-by-side.text-left .text-col { order: 1; }
+    .side-by-side.text-left .viz-col  { order: 2; }
+    .side-by-side.text-right .text-col { order: 2; }
+    .side-by-side.text-right .viz-col  { order: 1; }
+
+    .text-col {
+      padding-top: 8px;
+    }
+
+    .viz-col {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .side-by-side.wide-viz-left {
+      grid-template-columns: 1.75fr 1fr;
+    }
+
+    .side-by-side.wide-viz-right {
+      grid-template-columns: 1fr 1.85fr;
+    }
+
+    /* ── Map iframes ─────────────────────────────────────────────────── */
+    .map-frame-wrapper {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    .map-frame-wrapper iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      display: block;
+    }
+
+    .map-caption {
+      padding: 10px 14px;
+      background: var(--parchment);
+      border-top: 1px solid var(--border);
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Map separator text ──────────────────────────────────────────── */
+    .map-connector {
+      margin: 52px 0;
+      padding: 32px 40px;
+      background: var(--cream);
+      border-left: 3px solid var(--sage);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .map-connector p {
+      margin: 0;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: none;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Static image viz ────────────────────────────────────────────── */
+    .chart-wrapper {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      background: white;
+    }
+
+    .chart-wrapper img {
+      width: 100%;
+      display: block;
+    }
+
+    .chart-caption {
+      padding: 10px 14px;
+      background: var(--parchment);
+      border-top: 1px solid var(--border);
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Placeholder blocks ──────────────────────────────────────────── */
+    .placeholder {
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      padding: 60px 40px;
+      text-align: center;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.5);
+    }
+
+    .placeholder-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage-light);
+      margin-bottom: 8px;
+    }
+
+    .placeholder-desc {
+      font-style: italic;
+      font-size: 0.9rem;
+      max-width: none;
+    }
+
+    /* ── Callout stat boxes ──────────────────────────────────────────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 48px 0;
+    }
+
+    .stat-box {
+      padding: 24px 20px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--sage-dark);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Conclusion / infographic section ────────────────────────────── */
+    #conclusion {
+      background: var(--sage-dark);
+      color: var(--cream);
+      border-top: none;
+    }
+
+    #conclusion h2 {
+      color: var(--straw);
+    }
+
+    #conclusion h3 {
+      color: var(--sage-light);
+    }
+
+    #conclusion p {
+      color: rgba(249,246,238,0.8);
+    }
+
+    #conclusion .section-number {
+      color: var(--sage-light);
+    }
+
+    #conclusion .section-divider {
+      background: var(--straw);
+    }
+
+    #conclusion .placeholder {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+    }
+
+    #conclusion .placeholder-label {
+      color: var(--sage-light);
+    }
+
+    #conclusion .placeholder-desc {
+      color: rgba(249,246,238,0.6);
+    }
+
+    /* ── Citations & References ──────────────────────────────────────── */
+    .citation {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.65rem;
+      vertical-align: super;
+      line-height: 0;
+      color: var(--sage);
+      text-decoration: none;
+      margin-left: 1px;
+    }
+
+    .citation:hover {
+      color: var(--gold);
+      text-decoration: underline;
+    }
+
+    #references {
+      background: var(--parchment);
+    }
+
+    .references-list {
+      list-style: decimal;
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .references-list li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: none;
+    }
+
+    .references-list li::marker {
+      color: var(--sage);
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.78rem;
+    }
+
+    .references-loading {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.78rem;
+      color: var(--sage-light);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      background: var(--sage-dark);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 32px 80px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.7rem;
+      color: rgba(249,246,238,0.4);
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* ── Active nav highlight on scroll ─────────────────────────────── */
+    .nav-links a.active {
+      background: var(--sage);
+      color: white;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-title { display: none; }
+      #intro { padding: 100px 24px 60px; }
+      .hero-body { grid-template-columns: 1fr; gap: 32px; }
+      .section { padding: 80px 24px; }
+      .side-by-side { grid-template-columns: 1fr; gap: 40px; }
+      .side-by-side.text-right .text-col { order: 2; }
+      .side-by-side.text-right .viz-col  { order: 1; }
+      .stat-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────────────────────── -->
+  <nav>
+    <span class="nav-title">The Unintended Harvest</span>
+    <ul class="nav-links">
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#food-prices">Food Prices</a></li>
+      <li><a href="#land-use">Land Use</a></li>
+      <li><a href="#carbon">Carbon</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#references">References</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: INTRODUCTION                                           -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="intro">
+    <div class="hero-eyebrow">A Data Story &nbsp;·&nbsp; US Energy Policy</div>
+    <h1 class="hero-title">The <em>Unintended</em> Harvest</h1>
+    <p class="hero-subtitle">How America's ethanol mandate promised energy independence - and delivered something else entirely.</p>
+
+    <div class="section-divider"></div>
+
+    <div class="hero-body">
+      <!-- Left column: text -->
+      <div class="hero-text">
+        <p>In the early 2000s, the United States was facing a wide range of global challenges that impacted our energy security. With rising oil prices due to foreign conflicts, a growing concern about climate change, and a pressure to reduce fossil fuel dependence, Congress decided to take action. In 2005, they passed the Energy Policy Act, the first federal Renewable Fuel Standard which mandated that billions of gallons of corn ethanol be blended into the American gasoline supply each year. Two years later, they passed the Energy Independence and Security Act of 2007, which dramatically expanded the ambition, setting a target of 36 billion gallons of renewable fuel annually by 2022.<a href="#ref-2" class="citation">5</a></p>
+        <p>These laws were passed with the goals of reducing dependence on foreign oil, and cutting greenhouse gas emissions by replacing fossil fuels with a homegrown, plant-based alternative. Corn ethanol, grown by American farmers and processed in American refineries, seemed to offer both at once. By 2013, roughly 40% of the entire US corn crop was being diverted to fuel production.<a href="#ref-2" class="citation">1</a></p>
+        <p>What the mandate's architects did not fully anticipate was how a policy change of that scale would ripple through interconnected global systems. Corn is a foundational commodity in global food markets, animal feed supply chains, and agricultural land use decisions across multiple continents. So, when American farmers shifted millions of acres toward fuel corn, the consequences extended far beyond the fuel tank.</p>
+        <p>This project examines three of those consequences through data. Food prices spiked globally as corn supply tightened, with the burden falling disproportionately on the world's poorest populations.<a href="#ref-2" class="citation">19</a> Across the Corn Belt, millions of acres of grassland and wetland were converted to cropland to meet the new demand.<a href="#ref-2" class="citation">10</a> And when independent researchers ran the full lifecycle accounting for corn ethanol's greenhouse gas emissions, accounting for what happened to land use shifts as well as emissions from vehicles, they found that the climate math did not add up the way Congress had hoped.<a href="#ref-2" class="citation">13</a></p>
+
+        <div class="policy-tags">
+          <span class="policy-tag">Energy Policy Act · 2005</span>
+          <span class="policy-tag">Energy Independence &amp; Security Act · 2007</span>
+          <span class="policy-tag">Renewable Fuel Standard</span>
+          <span class="policy-tag">Corn Ethanol</span>
+        </div>
+      </div>
+
+      <!-- Right column: image -->
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80"
+          alt="Aerial view of corn fields in the American Midwest"
+        />
+        <div class="hero-image-caption">
+          Corn fields in the American Midwest &nbsp;·&nbsp; Photo: Unsplash
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: FOOD PRICES                                            -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="food-prices" class="section">
+    <div class="section-header">
+      <div class="section-number">Unintended Consequence 01</div>
+      <h2>Feeding Fuel, Starving Markets</h2>
+      <h3>How diverting corn to ethanol drove global food prices to record highs</h3>
+      <div class="section-divider"></div>
+    </div>
+
+<!-- Text + linked visual for corn and ethanol -->
+    <div class="side-by-side text-right wide-viz-left">
+      <div class="text-col">
+        <p><em>Prior to the Energy Policy Act of 2005 (EPAct), the majority of American corn production went toward feed and residual uses — primarily food for livestock — a pattern that had held steady since the 1980s. The EPAct fundamentally disrupted this balance by establishing the Renewable Fuel Standard (RFS), which mandated a minimum volume of renewable fuel to be blended into the nation's gasoline supply. These requirements were set to increase year over year, reaching a minimum of 7.5 billion gallons by 2012. Since corn-based ethanol was the most readily available way to meet these targets, the mandate injected an artificial, policy-driven boom in corn demand that would reshape American agriculture over the following decade.</em></p>
+        <p><em>The effects of the EPAct on corn prices and ethanol production were swift. Ethanol refineries scaled to meet the demand for the RFS targets faster than corn supply could keep pace. While corn prices had held steady around a price of $2 per bushel from 2000-2005, this squeeze caused a dramatic increase in corn prices. By 2008 corn prices had more than doubled to $5 per bushel and by 2012 the price had jumped to $7 per bushel. In under a decade, from 2005-2012, corn prices had experienced a shocking 250% price increase. The interactive chart illustrates this dual story: hover over any quarter to see how corn's use breakdown shifted in lockstep with rising prices. The amber ethanol slice, barely visible in 2000, steadily consumed a larger share of the crop each year, compressing the portions available for feed, food, and export. By 2012, over 40% of the entire US corn crop was being diverted to fuel production — a reallocation of agricultural resources with no historical precedent. </em></p>
+
+        <!-- Key stats -->
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-number">+250%</span>
+            <span class="stat-label">Corn price increase, 2005-2012</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">7.5B</span>
+            <span class="stat-label">Gallons of ethanol mandated annually by 2012</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">42%</span>
+            <span class="stat-label">Of US corn crop diverted to ethanol by 2012</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-col">
+        <div class="map-frame-wrapper">
+          <iframe
+            src="corn_ethanol.html"
+            title="Change in corn price and use, 2000-2015"
+            loading="lazy"
+            style="height: 436px;"
+          ></iframe>
+          <div class="map-caption">
+            Fig. 1 &nbsp;·&nbsp; Corn Price vs. Use Breakdown, 2000–2015 &nbsp;·&nbsp; Source: USDA ERS
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connector text between corn price visuals -->
+    <div class="map-connector">
+      <p><em>The surge in corn prices did not stay contained to corn alone. Because corn sits at the foundation of the American food system — as direct food, as livestock feed, and as a competitor for farmland with other crops — the mandate's price shock rippled outward into connected markets. Soybeans, pork, and poultry all followed corn's trajectory upward, as farmers, feedlot operators, and food producers absorbed the rising cost of a commodity they could not easily replace. </em></p>
+    </div>
+
+<!-- Text + commodity price chart-->
+    <div class="side-by-side text-left wide-viz-right">
+      <div class="text-col">
+        <p><em>The figure on the right shows the rising costs of soybeans, pork, and poultry relative to corn from 2000–2015, indexed to 2005 prices. Following the Energy Independence and Security Act (EISA) of 2007, the RFS target was dramatically expanded to 36 billion gallons annually by 2022, accelerating demand for corn even further.</em></p>
+        <p><em> While the price effects on pork and poultry emerged with a delay, soybean prices tracked corn's rise almost immediately. The high demand and profitability of corn incentivized farmers to convert soybean acreage to corn production. This supply squeeze drove a 150% increase in soybean prices between 2005 and 2012.</em></p>
+        <p><em> Pork and poultry prices followed a similar trajectory, though with a notable lag. Because corn is the primary feed grain for both industries, rising corn costs translated directly into higher input costs for livestock producers. Unlike crop commodities where price adjustments occur almost immediately, retail meat prices adjust more slowly — producers absorb cost increases over time before passing them through to consumers. As a result, pork and poultry prices remained relatively stable through the initial corn price spike of 2007–2008, before climbing steadily through the following years. By 2013, pork prices had risen 50% above their 2005 baseline and poultry prices had increased by 80% — a delayed but unmistakable consequence of the mandate's pressure on corn markets.</em></p>
+        <p><em>While the 2012 drought temporarily amplified price spikes across all four commodities, the sustained upward trend from 2005 onward predates the drought and is consistent with the structural demand shift created by the ethanol mandate.</em></p>
+        <p><em>The price increases documented here were not isolated market fluctuations — they were the predictable result of redirecting a foundational commodity away from the food system at a government-mandated scale. For American consumers, the ethanol mandate quietly raised the cost of everyday staples. For the world's poorest populations, who spend a far larger share of their income on food, the consequences were far more severe.</em></p>
+        <!-- Key stats -->
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-number">+167%</span>
+            <span class="stat-label">Soybean price increase 2005-2012</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">+50%</span>
+            <span class="stat-label">Pork price increase 2005-2013</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">+80%</span>
+            <span class="stat-label">Poultry price increase 2005-2013</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-col">
+        <div class="chart-wrapper">
+          <img
+            src="commodity_prices.png"
+            alt="Food commodity prices indexed to 2005"
+            style="width: 100%; display: block;"
+          />
+          <div class="chart-caption">
+            Fig. 2 &nbsp;·&nbsp; Food Commodity Prices Indexed to 2005, 2000–2015 &nbsp;·&nbsp; Sources: USDA ERS · FRED
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: LAND USE                                               -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="land-use" class="section">
+    <div class="section-header">
+      <div class="section-number">Unintended Consequence 02</div>
+      <h2>Destroyed Land</h2>
+      <h3>The mandate's quiet destruction of America's grasslands and wetlands</h3>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- Text + first map side by side -->
+    <div class="side-by-side text-left">
+      <div class="text-col">
+        <p><em>The mandate's impact on American agriculture went beyond simply redirecting existing corn supplies toward fuel production. To meet the escalating volume requirements, farmers across the country dramatically expanded how much corn they planted in the first place. The mechanism was straightforward: the Renewable Fuel Standard created a guaranteed, government-mandated market for corn that did not depend on food demand, weather, or export prices. This meant that American farmers could sell their crops at stable prices without uncertainty. When corn prices doubled between 2005 and 2012, the rational response was to plant more corn and find more land to plant it on.</em></p>
+        <p><em>The expansion that followed was rapid and geographically concentrated. Farmers in states like North Dakota and South Dakota, where grassland and wetland had previously made corn farming marginal, found that the new economics suddenly made conversion worthwhile. These were not traditional Corn Belt states, they were frontier territories for corn production, opened up almost overnight by the mandate's price signal. Between 2006 and 2012, according to USDA National Agricultural Statistics Service data, the average Corn Belt county saw corn acreage increase by nearly 50% in just six years. The map to the right shows where those decisions were made, county by county, with the darkest greens concentrated in the northern Great Plains, where the transformation was most dramatic.</em></p>
+
+        <!-- Key stats -->
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-number">+49%</span>
+            <span class="stat-label">Average county increase in corn acreage</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">1,573</span>
+            <span class="stat-label">Counties with measurable corn acreage increase</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">2006–12</span>
+            <span class="stat-label">Six years of rapid expansion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-col">
+        <div class="map-frame-wrapper">
+          <iframe
+            src="corn_acreage_map.html"
+            title="Change in corn acreage planted by county, 2006–2012"
+            loading="lazy"
+          ></iframe>
+          <div class="map-caption">
+            Fig. 1 &nbsp;·&nbsp; Change in Corn Acres Planted by County, 2006–2012 &nbsp;·&nbsp; Source: USDA NASS
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connector text between maps -->
+    <div class="map-connector">
+      <p><em>Why was this corn expansion so problematic? For one, corn requires heavy use of nitrogen and phosphorus fertilizers, and when rain washes these nutrients off fields, they end up in rivers and streams. This runoff can degrade local water quality, harm drinking water sources, and fuel algae blooms that deplete oxygen in the water. Research modeling the Upper Mississippi River Basin found that a 57% increase in corn acreage, comparable to what our data shows, would increase nitrogen loads to the Gulf of Mexico by nearly 19% and phosphorus loads by 12%. One major consequence is the worsening of the "dead zone" in the Gulf of Mexico, where chronically low oxygen levels make it difficult for marine life to survive.</em></p>
+      <p><em>Furthermore, the corn acreage expansion shown above did not happen on land that was already being farmed. Much of the growth, particularly in North Dakota, South Dakota, and Minnesota, came at the direct expense of natural grasslands and wetlands that had never been cultivated. These landscapes were plowed under to meet the mandate's ever-increasing volume requirements. </em></p>
+    </div>
+
+    <!-- Second map + text side by side (text on right) -->
+    <div class="side-by-side text-right">
+      <div class="viz-col">
+        <div class="map-frame-wrapper">
+          <iframe
+            src="corn_belt_map.html"
+            title="Year-over-year natural land flows by county, 2007–2012"
+            loading="lazy"
+          ></iframe>
+          <div class="map-caption">
+            Fig. 2 &nbsp;·&nbsp; Year-over-Year Natural Land Flows by County, 2007–2012 &nbsp;·&nbsp; Source: USDA Cropland Data Layer
+          </div>
+        </div>
+      </div>
+
+      <div class="text-col">
+        <p><em>The map to the left shows exactly where those losses occurred. Using USDA Cropland Data Layer satellite imagery, it tracks the net change in natural land, counting both conversions of grassland/wetland to corn and reversions of corn back to natural land, for each year from 2007 to 2012. Counties in deep red lost more than 10% of their natural land to corn on net in that interval. Counties in green gained natural land, reflecting fields that were taken out of corn production and allowed to revert.</em></p>
+        <p><em>The geographic pattern here diverges sharply from the acreage map. The most dramatic net losses are not concentrated in North Dakota or South Dakota,the states that saw the most dramatic absolute increases in corn acreage, but in Illinois and Indiana, along with parts of Minnesota and Iowa. The reason lies in what was left. States like Illinois and Indiana had already lost the vast majority of their natural land to agriculture long before the ethanol mandate. By 2007, so little grassland and wetland remained in these states that even modest additional conversion represented an outsized share of what was left. In heavily farmed states, the mandate did not push into new agricultural frontiers, iit consumed the last remnants of natural land that had persisted for decades alongside intensive row crop production.</em></p>
+        <p><em>The year-by-year slider reveals that the story was not linear. Illinois and Indiana saw their sharpest losses concentrated in 2007-2008, when the mandate's volume requirements first ramped up dramatically following EISA. Illinois then showed a striking reversal in 2011-2012, one of the largest net gains of any state in any single interval, likely reflecting crop rotation patterns and the Economics of the 2012 drought, which damaged corn yields severely enough that some farmers shifted acreage to other crops or conservation uses. This kind of year-to-year volatility is a reminder that land use decisions respond not only to policy mandates but to weather, commodity prices, and individual farm economics that play out across millions of individual fields simultaneously.</em></p>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-number">2.33M</span>
+            <span class="stat-label">Hectares of net natural land lost, 2007–2012</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">3.4%</span>
+            <span class="stat-label">Of 2007 Corn Belt natural land lost on net</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">9.4M</span>
+            <span class="stat-label">Hectares converted to corn (gross, before reversions)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: CARBON EMISSIONS                                       -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="carbon" class="section">
+    <div class="section-header">
+      <div class="section-number">Unintended Consequence 03</div>
+      <h2>A Climate Solution That Wasn't</h2>
+      <h3>Independent research found corn ethanol made greenhouse gas emissions significantly worse</h3>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="side-by-side text-left">
+      <div class="text-col">
+        <p><em>When Congress passed the Energy Independence and Security Act, it included an emissions standard designed to ensure the mandate delivered genuine climate benefits: corn ethanol would only count toward the federal volume requirements if its lifecycle greenhouse gas emissions were at least 20% lower than the gasoline it replaced. The EPA's own lifecycle analysis appeared to confirm this. Their model projected corn ethanol's emissions at around 74 gCO₂eq per megajoule of fuel, comfortably below the gasoline baseline of 92 gCO₂eq/MJ, and well within the 20% threshold the law required.</em></p>
+        <p><em>However, in 2008, a team of researchers led by Timothy Searchinger at Princeton published a paper in Science that fundamentally reframed the climate accounting for corn ethanol. Their argument was that when American farmers convert cropland to grow corn for fuel, the food that cropland used to produce has to come from somewhere else. That somewhere else, they showed, was overwhelmingly land that had previously been forest, savannah, or grassland, primarily in Brazil, China, and India. Clearing that land releases enormous quantities of carbon stored in soil and vegetation, carbon that had accumulated over decades or centuries. Once this indirect land use change was included in the lifecycle calculation, corn ethanol's emissions rose to approximately 177 gCO₂eq/MJ, nearly double the gasoline baseline, and 93% higher than the fuel it was supposed to replace. Searchinger et al. estimated it would take roughly 167 years of displacement to repay this carbon debt.</em></p>
+        <p><em>The chart to the right illustrates the gap between these two accounting frameworks. All three values are modeled estimates, rather than observed measurements of lifecycle emissions, accounting requires assumptions about global land use responses that cannot be directly measured. The EPA and Searchinger teams made different assumptions about how much land conversion would be triggered by the mandate and where that conversion would occur, which is what produces the dramatic divergence in their results. What is not in dispute is the idea that policies that increase demand for crops grown on finite agricultural land will push food production elsewhere, and that displacement has a carbon cost that direct emissions accounting does not capture.</em></p>
+      </div>
+
+      <div class="viz-col">
+        <div class="chart-wrapper">
+          <img
+            src="carbon_emissions_bar.png"
+            alt="Bar chart comparing lifecycle GHG emissions: EPA projection at 74 gCO2eq/MJ, gasoline baseline at 92, Searchinger et al. at 177"
+            style="width: 100%; display: block; margin: 0;"
+          />
+          <div class="chart-caption">
+            Fig. 3 &nbsp;·&nbsp; Lifecycle GHG Emissions per MJ: EPA Projection vs. Searchinger Reality &nbsp;·&nbsp;
+            Sources: EPA RFS2 RIA (2010); Searchinger et al., <em>Science</em> (2008)
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: CONCLUSION                                             -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="conclusion" class="section">
+    <div class="section-header">
+      <div class="section-number">Conclusion</div>
+      <h2>What the Data Tells Us</h2>
+      <h3>A well-intentioned policy, and three ways it backfired</h3>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="side-by-side text-left">
+      <div class="text-col" style="position: sticky; top: 80px; align-self: start;">
+        <p><em>In hopes of reducing American dependence on foreign oil and curbing the environmental impact of gasoline, Congress passed the Energy Policy Act in 2005 (EPAct). While well-intentioned, the EPAct and its successor, the Energy Independence and Security Act of 2007 (EISA), set in motion a corn production boom that would harm consumers worldwide while damaging the environment far more than it helped.</em></p>
+        <p><em>By mandating minimum volumes of biofuel to be blended into the nation's gasoline supply, the policy created an artificial, government-guaranteed market for corn ethanol. Farmers responded rationally to the price signal — but the consequences were not ones the policy's architects had anticipated. Corn commodity prices surged 250% in under a decade, driving up the cost of soybeans, pork, and poultry across global food markets and placing a disproportionate burden on the world's poorest consumers. To meet rising demand, millions of acres of natural grassland and wetland were converted to cropland across the American Corn Belt. And when researchers accounted for the full lifecycle of emissions — including the indirect land use change triggered globally — corn ethanol was found to produce 93% more greenhouse gas emissions than the gasoline it was meant to replace.</em></p>
+        <p><em>Following mounting scientific evidence of these adverse effects, the EPA reduced the minimum biofuels mandate for the first time in 2013, signaling a partial retreat from the policy's most aggressive targets.</em></p>
+        <p><em>The story of the ethanol mandate is ultimately a cautionary tale about the limits of partial-equilibrium thinking in policymaking. When a policy intervenes in a complex, globally interconnected system — like agricultural commodity markets — the direct effects are rarely the only effects. Corn does not exist in isolation. It feeds livestock, competes for farmland with other crops, and anchors land use decisions across an entire continent. Policies that treat it as a simple fuel feedstock, without accounting for these interdependencies, will inevitably produce consequences that no model fully predicted. The lesson is not that ambitious environmental policy is misguided — it is that the systems such policies touch deserve the same rigor and humility that good science demands.</em></p>
+      </div>
+
+      <div div class="viz-col" style="position: static;">
+        <!-- Infographic placeholder -->
+        <div class="chart-wrapper">
+          <img
+            src="corn_infographic_long.png"
+            alt="Infographic"
+            style="width: 100%; display: block;"
+          />
+          <div class="chart-caption">
+            Fig. 2 &nbsp;·&nbsp; Food Commodity Prices Indexed to 2005, 2000–2015 &nbsp;·&nbsp; Sources: USDA ERS · FRED  
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- REFERENCES                                                        -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <section id="references" class="section">
+    <div class="section-header">
+      <div class="section-number">References</div>
+      <h2>Sources</h2>
+      <div class="section-divider"></div>
+    </div>
+    <p class="references-loading" id="references-loading">Loading references…</p>
+    <ol class="references-list" id="references-list"></ol>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────────────────────── -->
+  <footer>
+    <span>Data Visualization · Georgetown University · 2026</span>
+    <span>Sources: USDA NASS · USDA Cropland Data Layer · EPA RFS2 RIA · Searchinger et al. (2008)</span>
+  </footer>
+
+  <!-- ── Citation.js - render references from .bib file ───────────────── -->
+  <script src="https://cdn.jsdelivr.net/npm/citation-js@0.7.16/build/citation.js" type="text/javascript"></script>
+  <script>
+    const Cite = require('citation-js');
+
+    fetch('references.bib')
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(bib => {
+        const cite = new Cite(bib);
+        const html = cite.format('bibliography', {
+          format:   'html',
+          template: 'apa',
+          lang:     'en-US',
+        });
+
+        // Citation.js wraps output in a div - extract individual entries
+        const parser  = new DOMParser();
+        const doc     = parser.parseFromString(html, 'text/html');
+        const entries = doc.querySelectorAll('.csl-entry');
+        const list    = document.getElementById('references-list');
+        const loading = document.getElementById('references-loading');
+
+        if (entries.length === 0) {
+          loading.textContent = '⚠ No references found in references.bib';
+          return;
+        }
+
+        entries.forEach((entry, i) => {
+          const li     = document.createElement('li');
+          li.id        = `ref-${i + 1}`;
+          li.innerHTML = entry.innerHTML;
+          list.appendChild(li);
+        });
+
+        loading.style.display = 'none';
+      })
+      .catch(err => {
+        const loading = document.getElementById('references-loading');
+        loading.textContent = `⚠ Could not load references: ${err.message}`;
+        console.error(err);
+      });
+  </script>
+
+  <!-- ── Active nav on scroll ────────────────────────────────────────── -->
+  <script>
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle(
+              'active',
+              link.getAttribute('href') === `#${entry.target.id}`
+            );
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>

@@ -37,7 +37,12 @@ printf 'Do you want to push the website to the Georgetown University domains fol
 read answer 
 
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
-    rsync -avz -e "ssh -i ~/.ssh/id_rsa" index.html images arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
+    rsync -avz -e "ssh -i ~/.ssh/id_rsa" \
+        index.html \
+        images \
+        dsan5000-project \
+        dsan5200-project \
+        arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
 else 
     echo NOT PUSHING TO WEBSITE!
 fi
