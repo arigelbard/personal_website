@@ -1,13 +1,11 @@
 ####################################################################
-git pull
-
 # SET PERMISSIONS FOR ROOT SITE FILES
 chmod 644 index.html
 for i in $(find images -type f); do chmod 644 $i; done
 chmod 755 images
 
 # GITHUB SYNC
-printf 'Would you like to push to GITHUB? (y/n)? '
+printf 'Would you like to sync with GITHUB? (y/n)? '
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
 
@@ -39,7 +37,7 @@ printf 'Do you want to push the website to the Georgetown University domains fol
 read answer 
 
 if [ "$answer" != "${answer#[Yy]}" ] ;then 
-    rsync -avz -e "ssh -i ~/.ssh/id_rsa" index.html images/ arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
+    rsync -avz -e "ssh -i ~/.ssh/id_rsa" index.html images arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
 else 
     echo NOT PUSHING TO WEBSITE!
 fi
