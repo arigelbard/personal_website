@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ari Gelbard and Younghoon Kim">
+
+<title>Identifying Gentrification in the United States – DSAN-5000: Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./assets/gu-logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cac7937947686b3caec8993c1c97a618.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">DSAN-5000: Project</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./report/report.html"> 
+<span class="menu-text">Report</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-technical-details" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Technical details</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-technical-details">    
+        <li>
+    <a class="dropdown-item" href="./technical-details/gentrification-index/main.html">
+ <span class="dropdown-text">Gentrification Index</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/data-collection/main.html">
+ <span class="dropdown-text">Data-collection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/data-cleaning/main.html">
+ <span class="dropdown-text">Data-cleaning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/eda/main.html">
+ <span class="dropdown-text">Exploratory Data Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/unsupervised-learning/main.html">
+ <span class="dropdown-text">Unsupervised Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/supervised-learning/main.html">
+ <span class="dropdown-text">Supervised Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/progress-log.html">
+ <span class="dropdown-text">Progress Log</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./technical-details/llm-usage-log.html">
+ <span class="dropdown-text">LLM usage Log</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./about_us.html"> 
+<span class="menu-text">About Us</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./references.html"> 
+<span class="menu-text">References</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#project-outline" id="toc-project-outline" class="nav-link" data-scroll-target="#project-outline">Project Outline</a></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Identifying Gentrification in the United States</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ari Gelbard and Younghoon Kim </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>This project is a data-driven exploration of neighborhood change across the United States from 2012 to 2019, with a focus on where and how gentrification is unfolding. Using U.S. Census data and machine learning techniques, we highlight the patterns and socioeconomic factors most closely associated with these changes. We aim to help illuminate broader trends in neighborhood change and support informed conversations about gentrification.</p>
+<div style="text-align: center;">
+<p><img src="./assets/gent_pic.png" alt="gentrification" width="400"></p>
+</div>
+<p style="text-align: center; font-size: 0.9em;">
+Source: <span class="citation" data-cites="dream_consumption_2018">(<a href="#ref-dream_consumption_2018" role="doc-biblioref">Dream, 2018</a>)</span>
+</p>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Gentrification is one of the most contentious topics in urban policy, touching questions of racial equity, displacement, cultural transformation, and neighborhood investment. Yet despite decades of research, there is still no single agreed-upon definition for gentrification, which makes it difficult to compare neighborhoods, cities, and time periods in a systematic way. This project takes a data-driven approach to that challenge by constructing a tract-level index of neighborhood change across the United States between 2012 and 2019.</p>
+<p>Using American Community Survey (ACS) 5-year data, we combine changes in income, rent, home values, demographic composition, residential turnover, and housing stock into a single principal component based gentrification index. We then use this index as the outcome for a series of exploratory, unsupervised, and supervised learning tasks. We explore where gentrification is most intense, find which socioeconomic variables best identify it, and compare the performance of a variety of linear and non-linear models.</p>
+<p>By offering a clear mesure of neighborhood change, this project provides tools that policymakers can use to identify signs of existing gentrification, allowing them to intervene and support affected communities.</p>
+<div style="text-align: center;">
+<p><img src="./assets/gent_index_dc.png" alt="Washington DC Gentrification Map" width="300"> <img src="./assets/gent_index_nyc.png" alt="NYC Gentrification Map" width="300"> <img src="./assets/gent_index_atl.png" alt="Atlanta Metro Area Gentrification Map" width="300"> <img src="./assets/gent_index_bayarea.png" alt="San Francisco Bay Area Gentrification Map" width="300"></p>
+</div>
+<p style="text-align: center; font-size: 0.9em;">
+Note: Code for gentrification maps can be found on the <a href="technical-details/gentrification-index/main.html">Gentrification Index page</a>.
+</p>
+</section>
+<section id="project-outline" class="level1">
+<h1>Project Outline</h1>
+<p>This project is broken down into several pages as follows:</p>
+<ul>
+<li><strong>Report</strong>: provides a non-technical summary of our methods, results, and conclusions.</li>
+<li><strong>Technical Details</strong>:
+<ul>
+<li><strong>Gentrification Index</strong>: Displays the code and methods used to create our gentrification index for the whole country.</li>
+<li><strong>Data-Collection</strong>: Displays the data collection for features other than the gentrification index.</li>
+<li><strong>Data-Cleaning</strong>: Displays the cleaning and feature selection process for our explanatory variables of interest.</li>
+<li><strong>Exploratory Data Analysis</strong>: Explores our selected features with a variety of visual aids.</li>
+<li><strong>Unsupervised Learning</strong>: Analyzes selected features using a variety of dimensionality reduction and clustering techniques.</li>
+<li><strong>Supervised Learning</strong>: Analyzes selected features with a variety of supervised learning models such as regressions, binary classification, and multi-class classification.</li>
+<li><strong>Progress Log</strong>: Summarizes our progress in the project over time.</li>
+<li><strong>LLM Usage Log</strong>: Provides a summary of uses of LLMs in the project.</li>
+</ul></li>
+<li><strong>About Us</strong>: Information about the authors.</li>
+</ul>
+</section>
+<section id="goals" class="level1">
+<h1>Goals</h1>
+<ol type="1">
+<li>Create a robust gentrification index based on generally agreed upon characteristics in academic literature,</li>
+<li>Explore the socioeconomic variables that most closely relate to the gentrification index,</li>
+<li>Explore statistical and geographic trends in the index and in features that may be related to it,</li>
+<li>Use unsupervised learning models to uncover natural groupings of neighborhoods and explore the broader patterns of socioeconomic change across census tracts,</li>
+<li>Use supervised learning models to predict the gentrification index and evaluate how different modelling approaches capture the complex, nonlinear relationships underlying neighborhood change.</li>
+</ol>
+</section>
+<section id="literature-review" class="level1">
+<h1>Literature Review</h1>
+<p>Gentrification has been accelerating over the past 50 years and has become a central issue in urban policy debates in the United States <span class="citation" data-cites="mitchell_displaced_2025">(<a href="#ref-mitchell_displaced_2025" role="doc-biblioref">Mitchell et al., 2025</a>)</span>. Yet, despite decades of research, scholars are yet to come to a single, universally accepted definition of what constitutes gentrification. In the 1960s, sociologist Ruth Glass coined the term “gentrification” to describe the migration of a new “gentry” into low-class neighborhoods in London <span class="citation" data-cites="glass_london_1964">(<a href="#ref-glass_london_1964" role="doc-biblioref">Glass, 1964</a>)</span>. While this baseline still applies to most definitions, over time it has shifted depending on the focus of the discourse, with practitioners and scholars emphasizing different combinations of socioeconomic, demographic, and cultural change. Some view it primarily as a form of socioeconomic upgrading, while others emphasize the physical and cultural displacement that occurs as a result of the heightened investment. These differences can complicate attempts to measure gentrification and its impacts.</p>
+<p>One key feature that is often debated is the inclusion of displacement in the definition of gentrification. Early urban theorists argue that gentrification by nature involves the replacement of native residents who are disproportionately low-income, working-class, and ethnic minorities. Ruth Glass, who originally created the term, described the process as moving rapidly “until all or most of the original working-class occupiers are displaced and the whole social character of the district is changed” <span class="citation" data-cites="glass_london_1964">(<a href="#ref-glass_london_1964" role="doc-biblioref">Glass, 1964</a>)</span>. Despite this, many policymakers at the time viewed gentrification as a positive process that improves neighborhoods with minimal displacement effects. Marcuse (1985) took issue with these views and argued that gentrification inherently displaces lower-income people by increasing pressures on housing and rents, even if no physical evictions are occurring. He also emphasizes that displacement is multidimensional and that when trying to identify it in the context of gentrification, we also have to take into account the disinvestment that may push people out before reinvestment, and the exclusionary effect that increased living costs have on the neighborhood. Marcuse’s emphasis on the multidimensional nature of displacement has also been extended by more recent papers <span class="citation" data-cites="marcuse_gentrification_1985">(<a href="#ref-marcuse_gentrification_1985" role="doc-biblioref">Marcuse, 1985</a>)</span>.</p>
+<p>Zuk et al.&nbsp;(2018) see gentrification and displacement as two distinct but closely intertwined processes. They expand on Marcuse’s paper, arguing that displacement can be either forced or responsive and may stem from direct or physical factors (such as eviction, landlord harassment, or building condemnation); indirect or economic causes (such as foreclosure, rent increases, or the loss of social networks); or exclusionary forces (such as unaffordable housing, cultural dissonance, or zoning policies). This broader framework highlights how displacement can emerge even in the absence of formal eviction or immediate resident turnover <span class="citation" data-cites="zuk_gentrification_2018">(<a href="#ref-zuk_gentrification_2018" role="doc-biblioref">Zuk et al., 2018</a>)</span>.</p>
+<p>Although displacement was central to early conceptions of gentrification, some later empirical definitions focus on socioeconomic upgrading/change in neighborhoods that may not necessarily be linked to displacement <span class="citation" data-cites="vigdor_does_2002 freeman_gentrification_2004 freeman_displacement_2005 ding_gentrification_2016">(<a href="#ref-ding_gentrification_2016" role="doc-biblioref">Ding et al., 2016</a>; <a href="#ref-freeman_displacement_2005" role="doc-biblioref">Freeman, 2005</a>; <a href="#ref-freeman_gentrification_2004" role="doc-biblioref">Freeman &amp; Braconi, 2004</a>; <a href="#ref-vigdor_does_2002" role="doc-biblioref">Vigdor, 2002</a>)</span>. Freeman (2005) defines gentrifying neighborhoods as “central city neighborhoods populated by low-income households that have previously experienced disinvestment” that then have “an influx of the relatively affluent or gentry, and an increase in investment.” Using longitudinal data from the Panel Study of Income Dynamics and the Decennial Census, Freeman investigates whether gentrification actually displaces low-income residents. His results from a logistic regression model indicate that gentrification does not increase overall mobility or displacement among incumbents <span class="citation" data-cites="freeman_displacement_2005">(<a href="#ref-freeman_displacement_2005" role="doc-biblioref">Freeman, 2005</a>)</span>. Freeman’s hypothesis was also investigated by Ding et al.&nbsp;(2016), who tracked individuals over time to examine the effect of gentrification in Philadelphia between 2002 and 2014. They consider a tract to be gentrifying if it began as a low-income tract and experienced above-median increases in home values and in the share of college-age residents. Using a linear probability model, they find that although mobility is higher in gentrifying neighborhoods, the effect is small and does not seem to differentiate between low- and high-income residents <span class="citation" data-cites="ding_gentrification_2016">(<a href="#ref-ding_gentrification_2016" role="doc-biblioref">Ding et al., 2016</a>)</span>.</p>
+<p>Despite their findings, a substantial body of research challenges these findings, arguing that traditional mobility-based measures significantly underestimate the scale and complexity of displacement <span class="citation" data-cites="atkinson_measuring_2000 atkinson_evidence_2004 newman_right_2006 davidson_new-build_2009 shaw_gentrification_2015">(<a href="#ref-atkinson_measuring_2000" role="doc-biblioref">Atkinson, 2000</a>, <a href="#ref-atkinson_evidence_2004" role="doc-biblioref">2004</a>; <a href="#ref-davidson_new-build_2009" role="doc-biblioref">Davidson &amp; Lees, 2009</a>; <a href="#ref-newman_right_2006" role="doc-biblioref">Newman &amp; Wyly, 2006</a>; <a href="#ref-shaw_gentrification_2015" role="doc-biblioref">Shaw &amp; Hagemans, 2015</a>)</span>. Newman &amp; Wyly (2006) directly contest the results from Freeman (2005) and Freeman &amp; Braconi (2004) by re-examining displacement trends in New York City using their same dataset and conducting individual interviews with residents. They find that displacement in New York City is significantly underestimated by these quantitative studies due to short-term data limitations that didn’t account for delayed displacement, chain displacement, or hidden forms of indirect or exclusionary displacement. Newman and Wyly’s interviews revealed that many residents face landlord harassment and persistent rent increases that can push them out slowly over time <span class="citation" data-cites="newman_right_2006">(<a href="#ref-newman_right_2006" role="doc-biblioref">Newman &amp; Wyly, 2006</a>)</span>.</p>
+<p>In addition to understanding the mechanisms and consequences of gentrification, a growing body of work has sought to predict where gentrification is likely to occur <span class="citation" data-cites="chapple_forewarned_2016 yoo_identifying_2023 naik_computer_2017 thackway_building_2023">(<a href="#ref-chapple_forewarned_2016" role="doc-biblioref">Chapple &amp; Zuk, 2016</a>; <a href="#ref-naik_computer_2017" role="doc-biblioref">Naik et al., 2017</a>; <a href="#ref-thackway_building_2023" role="doc-biblioref">Thackway et al., 2023</a>; <a href="#ref-yoo_identifying_2023" role="doc-biblioref">Yoo, 2023</a>)</span>. Chapple &amp; Zuk (2016) review a variety of common predictors and models used for predicting gentrification. Predictors can include socioeconomic variables, such as income and education, housing market conditions, location and accessibility indicators, demographic change indicators, and investment indicators. They categorize statistical models into three types: 1) linear or logistic regressions; 2) indicator scoring systems and composite indices; 3) typology-based multistage models. Some more recent papers attempt to leverage more complex machine learning models <span class="citation" data-cites="chapple_forewarned_2016">(<a href="#ref-chapple_forewarned_2016" role="doc-biblioref">Chapple &amp; Zuk, 2016</a>)</span>. Yoo (2023) creates a gentrification flag and tests six classification models to find the best predictor. They find that a random forest classification model outperforms logistic regression and other more complex models like gradient boosting and k-nearest neighbors <span class="citation" data-cites="yoo_identifying_2023">(<a href="#ref-yoo_identifying_2023" role="doc-biblioref">Yoo, 2023</a>)</span>. Some other papers explore more unique methods, such as Naik et al.&nbsp;(2017), who use Google Street View to leverage computer vision to identify visual cues of gentrification <span class="citation" data-cites="naik_computer_2017">(<a href="#ref-naik_computer_2017" role="doc-biblioref">Naik et al., 2017</a>)</span>.</p>
+<p>Gentrification is clearly a complicated topic that requires careful study and, taken together, these papers illustrate the need for more comprehensive measures of gentrification. The literature demonstrates how varying definitions and diverse methodological approaches all contribute to a fragmented understanding. Developing more transparent and consistent metrics is essential for helping researchers and policymakers better interpret neighborhood change and respond effectively to its consequences.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-atkinson_measuring_2000" class="csl-entry" role="listitem">
+Atkinson, R. (2000). Measuring <span>Gentrification</span> and <span>Displacement</span> in <span>Greater</span> <span>London</span>. <em>Urban Studies</em>, <em>37</em>(1), 149–165. <a href="https://doi.org/10.1080/0042098002339">https://doi.org/10.1080/0042098002339</a>
+</div>
+<div id="ref-atkinson_evidence_2004" class="csl-entry" role="listitem">
+Atkinson, R. (2004). The evidence on the impact of gentrification: New lessons for the urban renaissance? <em>European Journal of Housing Policy</em>, <em>4</em>(1), 107–131. <a href="https://doi.org/10.1080/1461671042000215479">https://doi.org/10.1080/1461671042000215479</a>
+</div>
+<div id="ref-chapple_forewarned_2016" class="csl-entry" role="listitem">
+Chapple, K., &amp; Zuk, M. (2016). Forewarned: <span>The</span> <span>Use</span> of <span>Neighborhood</span> <span>Early</span> <span>Warning</span> <span>Systems</span> for <span>Gentrification</span> and <span>Displacement</span>. <em>Cityscape</em>, <em>18</em>(3), 109–130. <a href="https://www.jstor.org/stable/26328275">https://www.jstor.org/stable/26328275</a>
+</div>
+<div id="ref-davidson_new-build_2009" class="csl-entry" role="listitem">
+Davidson, M., &amp; Lees, L. (2009). New-<span>Build</span> <span>Gentrification</span>: <span>Its</span> <span>Histories</span>, <span>Trajectories</span>, and <span>Critical</span> <span>Geographies</span>. <em>Population, Space and Place</em>, <em>16</em>, 395–411. <a href="https://doi.org/10.1002/psp.584">https://doi.org/10.1002/psp.584</a>
+</div>
+<div id="ref-ding_gentrification_2016" class="csl-entry" role="listitem">
+Ding, L., Hwang, J., &amp; Divringi, E. (2016). Gentrification and <span>Residential</span> <span>Mobility</span> in <span>Philadelphia</span>. <em>Regional Science and Urban Economics</em>, <em>61</em>, 38–51. <a href="https://doi.org/10.1016/j.regsciurbeco.2016.09.004">https://doi.org/10.1016/j.regsciurbeco.2016.09.004</a>
+</div>
+<div id="ref-dream_consumption_2018" class="csl-entry" role="listitem">
+Dream, N. (2018). Consumption, <span>Gentrification</span>, and <span>You</span> [Text/html]. In <em>New Dream</em>. <a href="https://newdream.org/blog/consumption-gentrification-and-you">https://newdream.org/blog/consumption-gentrification-and-you</a>
+</div>
+<div id="ref-freeman_displacement_2005" class="csl-entry" role="listitem">
+Freeman, L. (2005). Displacement or <span>Succession</span>?: <span>Residential</span> <span>Mobility</span> in <span>Gentrifying</span> <span>Neighborhoods</span>. <em>Urban Affairs Review - URBAN AFF REV</em>, <em>40</em>, 463–491. <a href="https://doi.org/10.1177/1078087404273341">https://doi.org/10.1177/1078087404273341</a>
+</div>
+<div id="ref-freeman_gentrification_2004" class="csl-entry" role="listitem">
+Freeman, L., &amp; Braconi, F. (2004). Gentrification and <span>Displacement</span> <span>New</span> <span>York</span> <span>City</span> in the 1990s. <em>Journal of The American Planning Association - J AMER PLANN ASSN</em>, <em>70</em>, 39–52. <a href="https://doi.org/10.1080/01944360408976337">https://doi.org/10.1080/01944360408976337</a>
+</div>
+<div id="ref-glass_london_1964" class="csl-entry" role="listitem">
+Glass, R. (1964). <em>London: <span>Aspects</span> of <span>Change</span></em>. MacGibbon &amp; Kee.
+</div>
+<div id="ref-marcuse_gentrification_1985" class="csl-entry" role="listitem">
+Marcuse, P. (1985). Gentrification, <span>Abandonment</span>, and <span>Displacement</span>: <span>Connections</span>, <span>Causes</span>, and <span>Policy</span> <span>Responses</span> in <span>New</span> <span>York</span> <span>City</span>. <em>Washington University Journal of Urban and Contemporary Law</em>, <em>28</em>(1). <a href="https://journals.library.wustl.edu/urbanlaw/article/id/8350/">https://journals.library.wustl.edu/urbanlaw/article/id/8350/</a>
+</div>
+<div id="ref-mitchell_displaced_2025" class="csl-entry" role="listitem">
+Mitchell, B. C., Edlebi, J., Meier, H. C. S., Richardson, J., Dean, J., &amp; Chen, L. (2025). <em>Displaced by <span>Design</span>: <span>Fifty</span> years of gentrification and <span>Black</span> cultural displacement in <span>US</span> cities</em> (p. 29). National Community Reinvestment Coalition. <a href="https://ncrc.org/displaced-by-design/">https://ncrc.org/displaced-by-design/</a>
+</div>
+<div id="ref-naik_computer_2017" class="csl-entry" role="listitem">
+Naik, N., Kominers, S. D., Raskar, R., Glaeser, E. L., &amp; Hidalgo, C. A. (2017). Computer vision uncovers predictors of physical urban change. <em>Proceedings of the National Academy of Sciences of the United States of America</em>, <em>114</em>(29), 7571–7576. <a href="https://doi.org/10.1073/pnas.1619003114">https://doi.org/10.1073/pnas.1619003114</a>
+</div>
+<div id="ref-newman_right_2006" class="csl-entry" role="listitem">
+Newman, K., &amp; Wyly, E. K. (2006). The <span>Right</span> to <span>Stay</span> <span>Put</span>, <span>Revisited</span>: <span>Gentrification</span> and <span>Resistance</span> to <span>Displacement</span> in <span>New</span> <span>York</span> <span>City</span>. <em>Urban Studies</em>, <em>43</em>(1), 23–57. <a href="https://doi.org/10.1080/00420980500388710">https://doi.org/10.1080/00420980500388710</a>
+</div>
+<div id="ref-shaw_gentrification_2015" class="csl-entry" role="listitem">
+Shaw, K. S., &amp; Hagemans, I. W. (2015). ‘<span>Gentrification</span> <span>Without</span> <span>Displacement</span>’ and the <span>Consequent</span> <span>Loss</span> of <span>Place</span>: <span>The</span> <span>Effects</span> of <span>Class</span> <span>Transition</span> on <span>Low</span>-income <span>Residents</span> of <span>Secure</span> <span>Housing</span> in <span>Gentrifying</span> <span>Areas</span>. <em>International Journal of Urban and Regional Research</em>, <em>39</em>(2), 323–341. <a href="https://doi.org/10.1111/1468-2427.12164">https://doi.org/10.1111/1468-2427.12164</a>
+</div>
+<div id="ref-thackway_building_2023" class="csl-entry" role="listitem">
+Thackway, W., Ng, M., Lee, C.-L., &amp; Pettit, C. (2023). Building a predictive machine learning model of gentrification in <span>Sydney</span>. <em>Cities</em>, <em>134</em>, 104192. <a href="https://doi.org/10.1016/j.cities.2023.104192">https://doi.org/10.1016/j.cities.2023.104192</a>
+</div>
+<div id="ref-vigdor_does_2002" class="csl-entry" role="listitem">
+Vigdor, J. L. (2002). Does <span>Gentrification</span> <span>Harm</span> the <span>Poor</span>? <em>Brookings-Wharton Papers on Urban Affairs</em>, <em>2002</em>(1), 133–182. <a href="https://muse.jhu.edu/pub/11/article/35609">https://muse.jhu.edu/pub/11/article/35609</a>
+</div>
+<div id="ref-yoo_identifying_2023" class="csl-entry" role="listitem">
+Yoo, J. (2023). <em>Identifying <span>Gentrification</span> using <span>Machine</span> <span>Learning</span></em>.
+</div>
+<div id="ref-zuk_gentrification_2018" class="csl-entry" role="listitem">
+Zuk, M., Bierbaum, A. H., Chappel, K., Gorska, K., &amp; Loukaitou-Sideris, A. (2018). Gentrification, <span>Displacement</span>, and the <span>Role</span> of <span>Public</span> <span>Investment</span>. <em>Journal of Planning Literature</em>, <em>33</em>(1), 31–44. https://doi.org/<a href="https://doi.org/10.1177/0885412217716439">https://doi.org/10.1177/0885412217716439</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
