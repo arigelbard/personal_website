@@ -42,6 +42,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
         images \
         dsan5000-project \
         dsan5200-project \
+        gelbard_resume.pdf \
         arigelba@gtown03.reclaimhosting.com:/home/arigelba/public_html/
 else 
     echo NOT PUSHING TO WEBSITE!

@@ -35,6 +35,27 @@
             font-size: 1rem;
             color: #a8c0d6;
             font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .header-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 12px;
+            font-size: 0.92rem;
+        }
+
+        .header-links a {
+            color: #cfe0ef;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(207,224,239,0.4);
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .header-links a:hover {
+            color: white;
+            border-color: white;
         }
 
         nav {
@@ -43,6 +64,7 @@
             justify-content: center;
             gap: 32px;
             padding: 12px 0;
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -79,6 +101,7 @@
             border-bottom: 2px solid #dde8f0;
         }
 
+        /* ABOUT */
         .about-grid {
             display: flex;
             gap: 36px;
@@ -99,6 +122,7 @@
             color: #3a3a3a;
         }
 
+        /* INTERESTS */
         .interests-list {
             list-style: none;
             padding: 0;
@@ -116,6 +140,147 @@
             font-weight: bold;
         }
 
+        /* SKILLS */
+        .skills-group {
+            margin-bottom: 18px;
+        }
+
+        .skills-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .skills-group h3 {
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #22395c;
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background-color: #eef3f8;
+            color: #1a2e4a;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+        }
+
+        .skill-tag.proficient {
+            background-color: #e6f0e6;
+            color: #1e4a1e;
+        }
+
+        .skill-tag.language {
+            background-color: #f3eef8;
+            color: #3a1a5c;
+        }
+
+        /* EDUCATION */
+        .edu-entry {
+            margin-bottom: 22px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .edu-entry:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .edu-header strong {
+            font-size: 1rem;
+            color: #1a2e4a;
+        }
+
+        .edu-header span.date {
+            font-size: 0.88rem;
+            color: #777;
+            white-space: nowrap;
+        }
+
+        .edu-entry p {
+            font-size: 0.92rem;
+            color: #444;
+            margin-top: 3px;
+        }
+
+        /* EXPERIENCE */
+        .job-entry {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .job-entry:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+
+        .job-header strong {
+            font-size: 1rem;
+            color: #1a2e4a;
+        }
+
+        .job-header span.location {
+            font-size: 0.88rem;
+            color: #777;
+        }
+
+        .job-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .job-title-row em {
+            font-size: 0.93rem;
+            color: #444;
+        }
+
+        .job-title-row span.date {
+            font-size: 0.88rem;
+            color: #777;
+            white-space: nowrap;
+        }
+
+        .job-entry ul {
+            padding-left: 18px;
+            font-size: 0.91rem;
+            color: #3a3a3a;
+        }
+
+        .job-entry ul li {
+            margin-bottom: 5px;
+        }
+
+        /* PROJECTS */
         .projects-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -181,6 +346,10 @@
             header h1 {
                 font-size: 2rem;
             }
+
+            .edu-header, .job-header, .job-title-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -189,10 +358,17 @@
 <header>
     <h1>Ari Gelbard</h1>
     <p class="subtitle">Data Science &amp; Analytics &bull; Georgetown University</p>
+    <div class="header-links">
+        <a href="mailto:arigelbard@hotmail.com">arigelbard@hotmail.com</a>
+        <a href="gelbard_resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+    </div>
 </header>
 
 <nav>
     <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
     <a href="#interests">Interests</a>
     <a href="#projects">Projects</a>
 </nav>
@@ -205,21 +381,105 @@
         <div class="about-grid">
             <img src="images/my_image.jpg" alt="Ari Gelbard">
             <p>
-                Ari Gelbard is a current student in the Data Science and Analytics program at Georgetown University.
-                He received his bachelor's degree in Economics and Mathematics with a minor in Global Poverty from the
-                University of Maryland, College Park in 2022. He graduated with honors after writing an undergraduate
-                thesis on the effect of property rights on income inequality.
+                I am a current student in the Data Science and Analytics program at Georgetown University. I received my bachelor's degree in Economics and Mathematics with a minor in Global Poverty from the University of Maryland, College Park in 2022, graduating with honors after writing an undergraduate thesis on the effect of property rights on income inequality.
                 <br><br>
-                After graduating, he worked for the Federal Reserve Board of Governors as a research assistant (RA)
-                for three years in the Household and Business Spending section of the Division of Research and
-                Statistics (R&amp;S). While at The Board, his work consisted of managing the GDP and investment
-                databases, running econometric models and analyzing real-time economic data, contributing to and
-                writing memos pertaining to the staff's forecasts, and working with economists on a variety of
-                research and policy projects. He also received the 2024 Division Director's Award for his work on a
-                project that summarized the contributions of the R&amp;S division to the field of economic measurement.
+                After graduating, I spent three years at the Federal Reserve Board of Governors as a Senior Research Assistant in the Division of Research and Statistics. My work focused on forecasting US GDP and private fixed investment, maintaining macroeconomic databases, contributing to policy memos, and collaborating with economists on a variety of research projects. I also received the 2024 Division Director's Award for my contributions to the field of economic measurement.
                 <br><br>
-                In his free time, Ari enjoys playing board games, cooking, playing tennis, and bowling.
+                In my free time, I enjoy playing board games, cooking, playing tennis, and bowling.
             </p>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+        <h2>Education</h2>
+
+        <div class="edu-entry">
+            <div class="edu-header">
+                <strong>Georgetown University &mdash; Washington, DC</strong>
+                <span class="date">Expected Spring 2027</span>
+            </div>
+            <p>Master of Science in Data Science and Analytics</p>
+        </div>
+
+        <div class="edu-entry">
+            <div class="edu-header">
+                <strong>George Washington University &mdash; Washington, DC</strong>
+                <span class="date">Spring 2024</span>
+            </div>
+            <p>PhD-level course in Econometrics</p>
+        </div>
+
+        <div class="edu-entry">
+            <div class="edu-header">
+                <strong>University of Maryland, College Park &mdash; College Park, MD</strong>
+                <span class="date">Spring 2022</span>
+            </div>
+            <p>Bachelor of Science, <em>cum laude</em> &mdash; Dual Major in Economics (Honors) &amp; Mathematics (Statistics track)</p>
+            <p>Minor in Global Poverty &bull; Dean's List &bull; GPA: 3.91/4.00</p>
+        </div>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section id="experience">
+        <h2>Work Experience</h2>
+
+        <div class="job-entry">
+            <div class="job-header">
+                <strong>Federal Reserve Board, Division of Research &amp; Statistics</strong>
+                <span class="location">Washington, DC</span>
+            </div>
+            <div class="job-title-row">
+                <em>Senior Research Assistant</em>
+                <span class="date">July 2022 &ndash; July 2025</span>
+            </div>
+        </div>
+
+        <div class="job-entry">
+            <div class="job-header">
+                <strong>University of Maryland, Department of Economics</strong>
+                <span class="location">College Park, MD</span>
+            </div>
+            <div class="job-title-row">
+                <em>Research Assistant</em>
+                <span class="date">Spring 2022</span>
+            </div>
+            <div class="job-title-row" style="margin-top: 12px;">
+                <em>Teaching Assistant, Introduction to Econometrics</em>
+                <span class="date">Spring 2020</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <h2>Skills</h2>
+
+        <div class="skills-group">
+            <h3>Advanced</h3>
+            <div class="skill-tags">
+                <span class="skill-tag">R</span>
+                <span class="skill-tag">STATA</span>
+                <span class="skill-tag">Python</span>
+            </div>
+        </div>
+
+        <div class="skills-group">
+            <h3>Proficient</h3>
+            <div class="skill-tags">
+                <span class="skill-tag proficient">MySQL</span>
+                <span class="skill-tag proficient">MATLAB</span>
+                <span class="skill-tag proficient">SAS</span>
+            </div>
+        </div>
+
+        <div class="skills-group">
+            <h3>Languages</h3>
+            <div class="skill-tags">
+                <span class="skill-tag language">English (Native)</span>
+                <span class="skill-tag language">Spanish (Fluent)</span>
+                <span class="skill-tag language">Italian (Conversational)</span>
+            </div>
         </div>
     </section>
 
@@ -239,14 +499,14 @@
         <div class="projects-grid">
 
             <div class="project-card">
-                <h3>DSAN 5000 Project</h3>
-                <p>Data Science and Analytics project exploring methods and applications in the DSAN 5000 course at Georgetown University.</p>
+                <h3>Identifying Gentrification in the United States</h3>
+                <p>Used Census tract-level data to construct a gentrification index and identify neighborhoods undergoing rapid socioeconomic change across the US between 2012 and 2019.</p>
                 <a href="https://arigelbard.georgetown.domains/dsan5000-project/" target="_blank" rel="noopener">View Project</a>
             </div>
 
             <div class="project-card">
-                <h3>DSAN 5200 Project</h3>
-                <p>Advanced data visualization and analytics project completed as part of the DSAN 5200 course at Georgetown University.</p>
+                <h3>The Unintended Harvest: The Hidden Costs of America's Ethanol Mandate</h3>
+                <p>Data-driven investigation into the unintended consequences of the Renewable Fuel Standard, examining how the corn ethanol mandate affected commodity prices, land use, and carbon emissions.</p>
                 <a href="https://arigelbard.georgetown.domains/dsan5200-project/" target="_blank" rel="noopener">View Project</a>
             </div>
 
