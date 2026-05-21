@@ -4,408 +4,127 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corn Belt Land Conversion Map</title>
-
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #0f1117;
-      --surface:  #1a1d27;
-      --border:   #2a2d3a;
-      --text:     #e8e6e0;
-      --muted:    #8a8890;
-      --accent:   #c8a96e;
-      --no-data:  #2a2d3a;
+      --bg: #0f1117; --surface: #1a1d27; --border: #2a2d3a;
+      --text: #e8e6e0; --muted: #8a8890; --accent: #c8a96e; --no-data: #2a2d3a;
     }
-
-    body {
-      font-family: 'Georgia', serif;
-      background: var(--bg);
-      color: var(--text);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── Header ──────────────────────────────────────────────────────── */
-    header {
-      padding: 18px 28px 14px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      flex-shrink: 0;
-    }
-
-    header h1 {
-      font-size: 1.25rem;
-      font-weight: normal;
-      letter-spacing: 0.02em;
-      color: var(--text);
-    }
-
-    header p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 3px;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Map ─────────────────────────────────────────────────────────── */
-    #map {
-      flex: 1;
-      width: 100%;
-      position: relative;
-    }
-
-    .leaflet-container {
-      background: var(--bg) !important;
-    }
-
-    /* ── Tooltip ─────────────────────────────────────────────────────── */
-    .leaflet-tooltip-custom {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 10px 14px;
-      color: var(--text);
-      font-family: 'Georgia', serif;
-      font-size: 0.82rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-      pointer-events: none;
-      min-width: 180px;
-    }
-
-    .tooltip-county {
-      font-size: 0.95rem;
-      font-weight: bold;
-      margin-bottom: 6px;
-      color: var(--accent);
-      letter-spacing: 0.03em;
-    }
-
-    .tooltip-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 3px;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .tooltip-row span:last-child {
-      color: var(--text);
-      font-family: 'Courier New', monospace;
-    }
-
-    .tooltip-no-data {
-      color: var(--muted);
-      font-style: italic;
-      font-size: 0.82rem;
-    }
-
-    /* ── Legend ──────────────────────────────────────────────────────── */
-    .legend {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 10px 12px;
-      font-family: 'Georgia', serif;
-      color: var(--text);
-      min-width: 170px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-    }
-
-    .legend-title {
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .legend-scale {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .legend-bar {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .legend-swatch {
-      width: 20px;
-      height: 12px;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .legend-no-data {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.68rem;
-      color: var(--muted);
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── Year slider control ─────────────────────────────────────────── */
-    .slider-control {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 10px 14px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      min-width: 240px;
-      font-family: 'Courier New', monospace;
-    }
-
-    .slider-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
-    }
-
-    .slider-label {
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .slider-year {
-      font-size: 1.1rem;
-      color: var(--accent);
-      font-weight: bold;
-      letter-spacing: 0.04em;
-    }
-
-    input[type=range] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      outline: none;
-      margin-top: 4px;
-      cursor: pointer;
-    }
-
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 2px solid var(--surface);
-      box-shadow: 0 0 4px rgba(200,169,110,0.5);
-    }
-
-    input[type=range]::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 2px solid var(--surface);
-    }
-
-    .slider-ticks {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 6px;
-    }
-
-    .slider-tick {
-      font-size: 0.65rem;
-      color: var(--muted);
-      cursor: pointer;
-      transition: color 0.15s;
-      user-select: none;
-    }
-
-    .slider-tick:hover,
-    .slider-tick.active {
-      color: var(--accent);
-    }
-
-    /* ── Footer note ─────────────────────────────────────────────────── */
-    footer {
-      padding: 8px 28px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      font-family: 'Courier New', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: space-between;
-    }
-    #loading-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15,17,23,0.75);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    #loading-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
+    header { padding: 18px 28px 14px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+    header h1 { font-size: 1.25rem; font-weight: normal; letter-spacing: 0.02em; color: var(--text); }
+    header p { font-size: 0.78rem; color: var(--muted); margin-top: 3px; font-family: 'Courier New', monospace; letter-spacing: 0.04em; }
+    #map { flex: 1; width: 100%; position: relative; }
+    .leaflet-container { background: var(--bg) !important; }
+    .leaflet-tooltip-custom { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; color: var(--text); font-family: 'Georgia', serif; font-size: 0.82rem; box-shadow: 0 4px 16px rgba(0,0,0,0.5); pointer-events: none; min-width: 200px; }
+    .tooltip-county { font-size: 0.95rem; font-weight: bold; margin-bottom: 6px; color: var(--accent); letter-spacing: 0.03em; }
+    .tooltip-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 3px; font-size: 0.78rem; color: var(--muted); }
+    .tooltip-row span:last-child { color: var(--text); font-family: 'Courier New', monospace; }
+    .tooltip-no-data { color: var(--muted); font-style: italic; font-size: 0.82rem; }
+    .legend { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; font-family: 'Georgia', serif; color: var(--text); min-width: 170px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+    .legend-title { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+    .legend-scale { display: flex; flex-direction: column; gap: 3px; }
+    .legend-bar { display: flex; align-items: center; gap: 6px; font-size: 0.68rem; color: var(--muted); }
+    .legend-swatch { width: 20px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .legend-no-data { display: flex; align-items: center; gap: 6px; font-size: 0.68rem; color: var(--muted); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+    .slider-control { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); min-width: 240px; font-family: 'Courier New', monospace; }
+    .slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .slider-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+    .slider-year { font-size: 1.1rem; color: var(--accent); font-weight: bold; letter-spacing: 0.04em; }
+    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: var(--border); border-radius: 2px; outline: none; margin-top: 4px; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--surface); box-shadow: 0 0 4px rgba(200,169,110,0.5); }
+    input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--surface); }
+    .slider-ticks { display: flex; justify-content: space-between; margin-top: 6px; }
+    .slider-tick { font-size: 0.65rem; color: var(--muted); cursor: pointer; transition: color 0.15s; user-select: none; }
+    .slider-tick:hover, .slider-tick.active { color: var(--accent); }
+    footer { padding: 8px 28px; background: var(--surface); border-top: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; flex-shrink: 0; display: flex; justify-content: space-between; }
+    #loading-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,17,23,0.75); display: flex; align-items: center; justify-content: center; z-index: 1000; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.06em; pointer-events: none; transition: opacity 0.3s; }
+    #loading-overlay.hidden { opacity: 0; pointer-events: none; }
   </style>
 </head>
-
 <body>
-
   <header>
     <h1>Year-over-Year Natural Land Flows by County</h1>
     <p id="map-subtitle">Loading…</p>
   </header>
-
   <div id="map">
     <div id="loading-overlay">Loading map data…</div>
   </div>
-
   <script>
-    // ── Configuration ────────────────────────────────────────────────────────
     const YEARS = [2008, 2009, 2010, 2011, 2012];
-
-    // Update this if your GeoJSON files live in a subfolder e.g. 'data/corn_belt_2006.geojson'
     const geojsonPath = year => `corn_belt_${year}.geojson`;
-
     const NO_DATA_COLOR = '#2a2d3a';
-
-    // ── Color scale ───────────────────────────────────────────────────────────
-    // Diverging scale centered at 0 (net_rate as % of natural land at start):
-    //   Red   = net loss (more natural→corn than corn→natural)
-    //   White = balanced
-    //   Blue  = net gain (more corn→natural than natural→corn)
-    // Capped at ±10%
 
     function getColor(netRate) {
       if (netRate === null || netRate === undefined) return NO_DATA_COLOR;
       const v = Math.max(-10, Math.min(10, netRate));
       if (v > 0) {
-        // Net loss — white to red
         const t = v / 10;
-        const r = 255;
-        const g = Math.round(255 * (1 - t * 0.82));
-        const b = Math.round(255 * (1 - t * 0.87));
-        return `rgb(${r},${g},${b})`;
+        return `rgb(255,${Math.round(255*(1-t*0.82))},${Math.round(255*(1-t*0.87))})`;
       } else if (v < 0) {
-        // Net gain — white to dark green
         const t = -v / 10;
-        const r = Math.round(255 * (1 - t * 0.75));
-        const g = Math.round(255 * (1 - t * 0.35));
-        const b = Math.round(255 * (1 - t * 0.75));
-        return `rgb(${r},${g},${b})`;
+        return `rgb(${Math.round(255*(1-t*0.75))},${Math.round(255*(1-t*0.35))},${Math.round(255*(1-t*0.75))})`;
       }
       return '#ffffff';
     }
 
     function styleFeature(feature) {
       const netRate = feature.properties.net_rate;
-      return {
-        fillColor:   getColor(netRate),
-        fillOpacity: netRate === null ? 0.3 : 0.85,
-        color:       '#1a1d27',
-        weight:      0.5,
-        opacity:     1,
-      };
+      return { fillColor: getColor(netRate), fillOpacity: netRate === null ? 0.3 : 0.85, color: '#1a1d27', weight: 0.5, opacity: 1 };
     }
 
-    // ── Map init ──────────────────────────────────────────────────────────────
-    const map = L.map('map', {
-      center:   [42.5, -96],
-      zoom:     5,
-      zoomSnap: 0.5,
-      minZoom:  4,
-      maxZoom:  9,
-    });
+    const map = L.map('map', { center: [42.5, -96], zoom: 5, zoomSnap: 0.5, minZoom: 4, maxZoom: 9 });
 
-    // ── State ─────────────────────────────────────────────────────────────────
-    let geojsonLayer = null;
-    let cachedData   = {};
-    let currentYear  = 2012;
-    let mapBoundsSet = false;
+    let geojsonLayer = null, cachedData = {}, currentYear = 2012, mapBoundsSet = false;
 
-    // ── State FIPS to name lookup ──────────────────────────────────────────────
     const STATE_NAMES = {
       '17':'Illinois','18':'Indiana','19':'Iowa','20':'Kansas',
       '27':'Minnesota','29':'Missouri','31':'Nebraska','38':'North Dakota',
       '39':'Ohio','46':'South Dakota','55':'Wisconsin'
     };
 
-    // ── Tooltip ───────────────────────────────────────────────────────────────
     function buildTooltipHTML(props) {
       const stateName = STATE_NAMES[props.STATEFP] || '';
       const location  = stateName ? `${props.NAME} County, ${stateName}` : `${props.NAME} County`;
 
       if (props.net_rate === null || props.net_rate === undefined) {
-        return `
-          <div class="tooltip-county">${location}</div>
-          <div class="tooltip-no-data">No significant natural land</div>
-        `;
+        return `<div class="tooltip-county">${location}</div>
+                <div class="tooltip-no-data">No significant natural land</div>`;
       }
-      const netRate   = props.net_rate >= 0
-        ? `+${props.net_rate.toFixed(1)}%`
-        : `${props.net_rate.toFixed(1)}%`;
-      const converted = props.converted_ha !== null
-        ? props.converted_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })
+
+      // Flip sign: positive net_rate = corn gained = natural land LOST → show as negative
+      const netRateDisplay = props.net_rate >= 0
+        ? `−${props.net_rate.toFixed(1)}%`
+        : `+${Math.abs(props.net_rate).toFixed(1)}%`;
+
+      const netDisplay = props.net_ha !== null
+        ? (props.net_ha >= 0 ? '−' : '+') +
+          Math.abs(props.net_ha).toLocaleString(undefined, { maximumFractionDigits: 0 })
         : '—';
-      const reverted  = props.reverted_ha !== null
-        ? props.reverted_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })
-        : '—';
-      const net       = props.net_ha !== null
-        ? (props.net_ha >= 0 ? '+' : '') +
-          props.net_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })
-        : '—';
-      const netColor  = props.net_ha >= 0 ? '#c0392b' : '#2a6496';
+
+      // Red if natural land lost (net_ha positive = corn gained), green if gained
+      const netColor   = props.net_ha >= 0 ? '#c0392b' : '#27ae60';
+
+      const converted  = props.converted_ha !== null
+        ? props.converted_ha.toLocaleString(undefined, { maximumFractionDigits: 0 }) : '—';
+      const reverted   = props.reverted_ha !== null
+        ? props.reverted_ha.toLocaleString(undefined, { maximumFractionDigits: 0 }) : '—';
 
       return `
         <div class="tooltip-county">${location}</div>
-        <div class="tooltip-row"><span>Net change</span>
-          <span style="color:${netColor}">${netRate} &nbsp;(${net} ha)</span></div>
-        <div class="tooltip-row"><span>Natural→Corn</span><span>${converted} ha</span></div>
-        <div class="tooltip-row"><span>Corn→Natural</span><span>${reverted} ha</span></div>
+        <div class="tooltip-row"><span>Net natural land change</span>
+          <span style="color:${netColor}">${netRateDisplay} &nbsp;(${netDisplay} ha)</span></div>
+        <div class="tooltip-row"><span>Converted to corn</span><span>${converted} ha</span></div>
+        <div class="tooltip-row"><span>Reverted to natural land</span><span>${reverted} ha</span></div>
       `;
     }
 
     function onEachFeature(feature, layer) {
-      layer.bindTooltip(
-        buildTooltipHTML(feature.properties),
-        {
-          sticky:    false,
-          className: 'leaflet-tooltip-custom',
-          opacity:   1,
-          permanent: false,
-        }
-      );
-
+      layer.bindTooltip(buildTooltipHTML(feature.properties), {
+        sticky: false, className: 'leaflet-tooltip-custom', opacity: 1, permanent: false
+      });
       layer.on({
         mouseover(e) {
           map.eachLayer(l => { if (l.closeTooltip) l.closeTooltip(); });
@@ -420,73 +139,45 @@
         },
       });
     }
-    
-    // ── Update header subtitle with stats ─────────────────────────────────────
-    function updateStats(data, year) {
-      let totalConverted = 0;
-      let totalReverted  = 0;
 
+    function updateStats(data, year) {
+      let totalConverted = 0, totalReverted = 0;
       data.features.forEach(f => {
         if (f.properties.converted_ha) totalConverted += f.properties.converted_ha;
         if (f.properties.reverted_ha)  totalReverted  += f.properties.reverted_ha;
       });
 
+      // netHa positive = more conversion than reversion = natural land LOST
+      // Display from natural land perspective: flip sign
       const netHa    = totalConverted - totalReverted;
       const netM     = (Math.abs(netHa) / 1e6).toFixed(2);
-      const sign     = netHa >= 0 ? '+' : '−';
+      const sign     = netHa >= 0 ? '−' : '+';   // flipped: loss shown as negative
       const color    = netHa >= 0 ? 'var(--accent)' : '#4caf96';
       const prevYear = year - 1;
 
       document.getElementById('map-subtitle').innerHTML =
         `${prevYear}→${year} &nbsp;·&nbsp; `
-        + `<strong style="color:${color}">${sign}${netM}M ha net change</strong>`
-        + ` &nbsp;·&nbsp; ${(totalConverted/1e6).toFixed(2)}M converted`
-        + ` &nbsp;·&nbsp; ${(totalReverted/1e6).toFixed(2)}M reverted`;
+        + `<strong style="color:${color}">${sign}${netM}M ha net natural land change</strong>`
+        + ` &nbsp;·&nbsp; ${(totalConverted/1e6).toFixed(2)}M ha converted to corn`
+        + ` &nbsp;·&nbsp; ${(totalReverted/1e6).toFixed(2)}M ha reverted to natural land`;
     }
 
-    // ── Render a year's data ──────────────────────────────────────────────────
     function renderYear(year, data) {
-      if (geojsonLayer) {
-        map.removeLayer(geojsonLayer);
-        geojsonLayer = null;
-      }
-
-      geojsonLayer = L.geoJSON(data, {
-        style:         styleFeature,
-        onEachFeature: onEachFeature,
-      }).addTo(map);
-
-      if (!mapBoundsSet) {
-        map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
-        mapBoundsSet = true;
-      }
-
+      if (geojsonLayer) { map.removeLayer(geojsonLayer); geojsonLayer = null; }
+      geojsonLayer = L.geoJSON(data, { style: styleFeature, onEachFeature }).addTo(map);
+      if (!mapBoundsSet) { map.fitBounds(geojsonLayer.getBounds(), { padding: [20,20] }); mapBoundsSet = true; }
       updateStats(data, year);
       updateSliderUI(year);
     }
 
-    // ── Load a year (uses cache if available) ─────────────────────────────────
     function loadYear(year) {
       const overlay = document.getElementById('loading-overlay');
       overlay.classList.remove('hidden');
       overlay.textContent = `Loading ${year} data…`;
-
-      if (cachedData[year]) {
-        renderYear(year, cachedData[year]);
-        overlay.classList.add('hidden');
-        return;
-      }
-
+      if (cachedData[year]) { renderYear(year, cachedData[year]); overlay.classList.add('hidden'); return; }
       fetch(geojsonPath(year))
-        .then(r => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        })
-        .then(data => {
-          cachedData[year] = data;
-          renderYear(year, data);
-          overlay.classList.add('hidden');
-        })
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .then(data => { cachedData[year] = data; renderYear(year, data); overlay.classList.add('hidden'); })
         .catch(err => {
           console.error(`Failed to load ${year}:`, err);
           overlay.textContent = `⚠ Could not load corn_belt_${year}.geojson`;
@@ -494,18 +185,16 @@
         });
     }
 
-    // ── Sync slider UI to current year ────────────────────────────────────────
     function updateSliderUI(year) {
       const display = document.getElementById('slider-year-display');
       const slider  = document.getElementById('year-slider');
-      if (display) display.textContent = `${year - 1}-${year}`;
+      if (display) display.textContent = `${year-1}→${year}`;
       if (slider)  slider.value = year;
       document.querySelectorAll('.slider-tick').forEach(el => {
         el.classList.toggle('active', parseInt(el.dataset.year) === year);
       });
     }
 
-    // ── setYear — called by slider input and tick clicks ──────────────────────
     window.setYear = function(year) {
       year = parseInt(year);
       if (year === currentYear) return;
@@ -517,7 +206,6 @@
     const legendControl = L.control({ position: 'bottomright' });
     legendControl.onAdd = function() {
       const div = L.DomUtil.create('div', 'legend');
-
       div.innerHTML = `
         <div class="legend-title">Net Natural Land Change</div>
         <div class="legend-scale">
@@ -535,86 +223,56 @@
           </div>
           <div class="legend-bar">
             <div class="legend-swatch" style="background:rgb(255,204,204)"></div>
-            <span>-5%</span>
+            <span>−5%</span>
           </div>
           <div class="legend-bar">
             <div class="legend-swatch" style="background:rgb(255,46,33)"></div>
-            <span>≤ -10% (net loss)</span>
+            <span>≤ −10% (net loss)</span>
           </div>
         </div>
         <div class="legend-no-data">
           <div class="legend-swatch" style="background:${NO_DATA_COLOR}"></div>
           <span>No significant natural land</span>
-        </div>
-      `;
+        </div>`;
       return div;
     };
     legendControl.addTo(map);
 
-    // ── Slider control ────────────────────────────────────────────────────────
+    // ── Slider ────────────────────────────────────────────────────────────────
     const sliderControl = L.control({ position: 'bottomleft' });
     sliderControl.onAdd = function() {
       const div = L.DomUtil.create('div', 'slider-control');
-
       const ticks = YEARS.map(y => {
-        const label = `'${String(y-1).slice(-2)}-'${String(y).slice(-2)}`;
-        return `
-          <span class="slider-tick ${y === currentYear ? 'active' : ''}"
-                data-year="${y}"
-                onclick="setYear(${y})">${label}</span>
-        `;
+        const label = `'${String(y-1).slice(-2)}→'${String(y).slice(-2)}`;
+        return `<span class="slider-tick ${y === currentYear ? 'active' : ''}" data-year="${y}" onclick="setYear(${y})">${label}</span>`;
       }).join('');
-
       div.innerHTML = `
         <div class="slider-header">
           <span class="slider-label">Interval</span>
-          <span class="slider-year" id="slider-year-display">${currentYear - 1}-${currentYear}</span>
+          <span class="slider-year" id="slider-year-display">${currentYear-1}→${currentYear}</span>
         </div>
-        <input
-          type="range"
-          id="year-slider"
-          min="${YEARS[0]}"
-          max="${YEARS[YEARS.length - 1]}"
-          step="1"
-          value="${currentYear}"
-        />
-        <div class="slider-ticks">${ticks}</div>
-      `;
-
-      // Prevent map interactions bleeding through the slider
+        <input type="range" id="year-slider" min="${YEARS[0]}" max="${YEARS[YEARS.length-1]}" step="1" value="${currentYear}" />
+        <div class="slider-ticks">${ticks}</div>`;
       L.DomEvent.disableClickPropagation(div);
       L.DomEvent.disableScrollPropagation(div);
-
-      // Attach slider listener after the element is in the DOM
       setTimeout(() => {
         const slider = document.getElementById('year-slider');
-        if (slider) {
-          slider.addEventListener('input', e => setYear(parseInt(e.target.value)));
-        }
+        if (slider) slider.addEventListener('input', e => setYear(parseInt(e.target.value)));
       }, 0);
-
       return div;
     };
     sliderControl.addTo(map);
 
-    // ── Preload remaining years silently in the background ────────────────────
     function preloadAll() {
       setTimeout(() => {
         YEARS.forEach(y => {
-          if (!cachedData[y]) {
-            fetch(geojsonPath(y))
-              .then(r => r.json())
-              .then(data => { cachedData[y] = data; })
-              .catch(() => {});
-          }
+          if (!cachedData[y]) fetch(geojsonPath(y)).then(r => r.json()).then(data => { cachedData[y] = data; }).catch(() => {});
         });
       }, 1500);
     }
 
-    // ── Boot ──────────────────────────────────────────────────────────────────
     loadYear(currentYear);
     preloadAll();
-
   </script>
 </body>
 </html>
